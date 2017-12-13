@@ -6,6 +6,10 @@ import javafx.stage.Stage;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
+import java.nio.file.FileStore;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
@@ -35,7 +39,10 @@ public class Main extends Application implements Observer {
         for (int i = 0; i < roots.length; i++) {
             System.out.println("Root[" + i + "]: " + roots[i]);
             FileSystemView fsv = FileSystemView.getFileSystemView();
-            Drive drive = new Drive(roots[i].toString(), fsv.getSystemDisplayName(roots[i]), fsv.getSystemTypeDescription(roots[i]), "exFat", (int) roots[i].getTotalSpace());
+            Path path = Paths.get(roots[i].toString());
+            FileStore test = Files.getFileStore(path);
+            String format = test.type();
+            Drive drive = new Drive(roots[i].toString(), fsv.getSystemDisplayName(roots[i]), fsv.getSystemTypeDescription(roots[i]), format, (int) roots[i].getTotalSpace());
             drives.add(drive);
         }
         for (Drive d : drives) {
