@@ -7,8 +7,8 @@ public class Drive {
     private String format;
     private int size;
 
-    public Drive(String name, String namedDrive, String hdModel, String hdFormat, int sizeDrive) {
-        letterName = name;
+    public Drive(String letter, String namedDrive, String hdModel, String hdFormat, int sizeDrive) {
+        letterName = letter;
         if (namedDrive != "") {
             named = namedDrive;
         } else {
