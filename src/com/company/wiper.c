@@ -31,18 +31,22 @@ int main(int argc, char * argv[]) {
                     }
                     break;
                 case 2://writes all random integers's
-                    while(1){//while not at the end of the file
+                    while(!feof(f)){//while not at the end of the file
                         int num = rand();
                         int size = (int)((ceil(log10(num))+1)*sizeof(char));
                         char * numtoStr = (char *) malloc(sizeof(char) * size);
                         sprintf(numtoStr, "%d", num);
+
+                        fwrite(numtoStr, strlen(numtoStr), 1, f);
+                        fseek(f, strlen(numtoStr) ,SEEK_CUR);
+
                         printf("For case 2, the random number is %s\n", numtoStr);
                         free(numtoStr);
                         break;
                     }
                     break;
                 case 3://writes the string "NTID[random integer]Wipe"'s
-                    while(1){
+                    while(!feof(f)){
                         int num = rand();
                         int size = (int)((ceil(log10(num))+1)*sizeof(char));
                         char * numtoStr = (char *) malloc(sizeof(char) * size);
@@ -55,6 +59,10 @@ int main(int argc, char * argv[]) {
                         strcat(wipeString,b);
                         strcat(wipeString,numtoStr);
                         strcat(wipeString,e);
+
+                        fwrite(wipeString, strlen(wipeString), 1, f);
+                        fseek(f, strlen(wipeString),SEEK_CUR);
+
                         printf("For case 3, the random string is %s\n", wipeString);
                         free(numtoStr);
                         free(wipeString);
