@@ -3,6 +3,7 @@
 #include <time.h>
 #include <memory.h>
 #include <math.h>
+#include <assert.h>
 
 int main(int argc, char * argv[]) {
     static int numPasses = 36;
@@ -16,13 +17,17 @@ int main(int argc, char * argv[]) {
             FILE * f = fopen(argv[argc-1],"r+"); //open path to drive
             switch(i % 4){
                 case 0://writes all 0's
-                    while(1){//while not at the end of the file
-                        break;
+                    while(!feof(f)){//while not at the end of the file
+                        int * thingToWrite = 0;
+                        fwrite(thingToWrite, sizeof(int), 1, f);
+                        fseek(f, sizeof(int),SEEK_CUR);
                     }
                     break;
                 case 1://writes all 1's
-                    while(1){//while not at the end of the file
-                        break;
+                    while(!feof(f)){//while not at the end of the file
+                        int * thingToWrite = 1;
+                        fwrite(thingToWrite, sizeof(int), 1, f);
+                        fseek(f, sizeof(int),SEEK_CUR);
                     }
                     break;
                 case 2://writes all random integers's
