@@ -54,7 +54,7 @@ public class WiperModel extends Observable{
             for(Drive d: drives){
                 //call wipe function from c executable
                 //put name of executable in parenteses
-                Process p = Runtime.getRuntime().exec("");
+                Process p = Runtime.getRuntime().exec("./wiper");
                 announce("Finished wiping Drive " + d.getLetterName());
             }
         }
