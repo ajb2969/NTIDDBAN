@@ -2,8 +2,10 @@ package com.company;
 
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -24,6 +26,7 @@ public class GUI extends Application implements EventHandler<ActionEvent>, Obser
     private ArrayList<Drive> drives;
     private HBox center = new HBox();
     private WiperModel model;
+    private TextArea tf;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -40,21 +43,30 @@ public class GUI extends Application implements EventHandler<ActionEvent>, Obser
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("NTID NUKING SERVICE");
+        primaryStage.setMinWidth(500);
         buttonNuke = new Button("NUKE");
-        buttonNuke.setOnAction(this);
+        buttonNuke.setOnAction(e -> System.out.println());
         nukeAll = new Button("Nuke All");
-        nukeAll.setOnAction(this);
+        nukeAll.setOnAction(e -> System.out.println());
+
         comboBoxDrives = new ComboBox<>();
         for(Drive d: model.getDrives()){
             comboBoxDrives.getItems().add(d.getLetterName());
         }
-        comboBoxDrives.setOnAction(this);
         center.getChildren().addAll(comboBoxDrives, buttonNuke,nukeAll);
-        StackPane root = new StackPane();
-        root.getChildren().add(center);
+
+        tf = new TextArea();
+        GridPane root = new GridPane();
+        GridPane.setMargin(center, new Insets(0, 0, 10, 0));
+        root.addRow(0,center);
+        root.addRow(1,tf);
+        root.setHgap(10); //horizontal gap in pixels => that's what you are asking for
+        root.setVgap(10); //vertical gap in pixels
+        root.setPadding(new Insets(10, 10, 10, 10));
         primaryStage.setScene(new Scene(root, 300, 250));
         primaryStage.show();
     }
+
 
     @Override
     public void handle(ActionEvent event) {
