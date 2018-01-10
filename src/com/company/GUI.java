@@ -45,9 +45,9 @@ public class GUI extends Application implements EventHandler<ActionEvent>, Obser
         primaryStage.setTitle("NTID NUKING SERVICE");
         primaryStage.setMinWidth(500);
         buttonNuke = new Button("NUKE");
-        buttonNuke.setOnAction(e -> System.out.println());
+        buttonNuke.setOnAction(this);
         nukeAll = new Button("Nuke All");
-        nukeAll.setOnAction(e -> System.out.println());
+        nukeAll.setOnAction(this);
 
         comboBoxDrives = new ComboBox<>();
         for(Drive d: model.getDrives()){
@@ -83,8 +83,8 @@ public class GUI extends Application implements EventHandler<ActionEvent>, Obser
                 buttonNuke.setDisable(true);
                 nukeAll.setDisable(true);
                 model.wipe(driveInfo);
-                //buttonNuke.setDisable(false);
-                //nukeAll.setDisable(false);
+                buttonNuke.setDisable(false);
+                nukeAll.setDisable(false);
             }
             catch(NullPointerException e){
                 Alert noValDisplay = new Alert(Alert.AlertType.ERROR);
@@ -112,37 +112,6 @@ public class GUI extends Application implements EventHandler<ActionEvent>, Obser
 
     @Override
     public void update(Observable o, Object arg) {
-        if(model.getDriveWiped() == 1){ // drives were wiped
-            String driveListing = "";
-
-            switch (model.getDriveWiped()){
-                case 1:
-                    Alert driveWipedSuccess = new Alert(Alert.AlertType.ERROR);
-                    driveWipedSuccess.setTitle("Sucessful Wipe");
-                    driveWipedSuccess.setHeaderText("The drive was able to be wiped");
-                    driveListing += model.getDrives().get(0).getLetterName();
-                    driveWipedSuccess.setContentText("Drive " + driveListing + "was able to be wiped");
-                    driveWipedSuccess.showAndWait();
-                    break;
-                default:
-                    for(Drive d: model.getDrives()){
-                        driveListing += d.getLetterName() + "\n";
-                    }
-                    Alert drivesWipedSuccess = new Alert(Alert.AlertType.ERROR);
-                    drivesWipedSuccess.setTitle("Successful Wipes");
-                    drivesWipedSuccess.setHeaderText("The drives were able to be wiped");
-                    drivesWipedSuccess.setContentText("The following Drives were able to be wiped \n" + driveListing);
-                    drivesWipedSuccess.showAndWait();
-                    break;
-
-            }
-        }
-        else{//drives weren't wiped
-            Alert noValDisplay = new Alert(Alert.AlertType.ERROR);
-            noValDisplay.setTitle("Unexpected Error");
-            noValDisplay.setHeaderText("The drives were unable to be wiped");
-            noValDisplay.setContentText("It appears that one or more of the selected drives were unable to be wiped \n Please try again.");
-            noValDisplay.showAndWait();
-        }
+        tf.setText(model.getOutput());
     }
 }

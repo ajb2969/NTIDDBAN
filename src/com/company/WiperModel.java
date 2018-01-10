@@ -114,7 +114,6 @@ public class WiperModel extends Observable{
         return driveWiped;
     }
 
-
     public String getOutput(){
         StringBuilder sb = new StringBuilder();
         this.printer.stream().forEach(element -> sb.append(element));
