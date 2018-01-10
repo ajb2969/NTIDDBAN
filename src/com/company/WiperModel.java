@@ -2,11 +2,13 @@ package com.company;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.*;
+import java.net.URLDecoder;
 import java.nio.file.FileStore;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
@@ -16,17 +18,15 @@ public class WiperModel extends Observable{
     private int driveWiped;
     private int howManyWiped;
     private final String EXECUTABLE = "wiper";
-    private  String directory = "/Users/alexbrown/IdeaProjects/DBAN/src/com/company";
+    private String directory = "/Users/alexbrown/IdeaProjects/DBAN/src/com/company";
+    private List<String> printer;
+    private int shellExitStatus;
+
     public WiperModel() throws Exception {
         pullDrives();
+        this.shellExitStatus = 1;
         this.driveWiped = 0;
-        System.out.println("Drives have been pulled");
-    }
-
-    private void notifyListener(Object string) {
-        // TODO implement your handling here. System.out printing is just an
-        // example.
-        System.out.println(String.valueOf(string));
+        printer = new ArrayList<String>();
     }
 
     private void pullDrives() throws Exception{
@@ -50,9 +50,6 @@ public class WiperModel extends Observable{
                 }
             }
         }
-        for (Drive d : drives) {
-            System.out.println(d.getLetterName() + " " + d.getNamed() + " "+ d.getModel() +" "+ d.getSize()+ " " + d.getFormat());
-        }
     }
 
     public ArrayList<Drive> getDrives(){
@@ -62,20 +59,8 @@ public class WiperModel extends Observable{
 
     public void wipe(ArrayList<Drive> drives)throws Exception{
         try{
-            if(drives.size() > 1){
-                this.howManyWiped = 2;
-            }
-            else if(drives.size() == 1){
-                this.howManyWiped = 1;
-            }
-            else{
-                this.howManyWiped = 0;
-            }
-            int shellExitStatus = 0;
             for(Drive d: drives){
-                //call wipe function from c executable
-                //put name of executable in parenteses
-
+                String revisedDrive = URLDecoder.decode(d.getLetterName(), "UTF-8");//fixDrivePath(d.getLetterName());//drive path with esc seq.
                 ProcessBuilder execute = new ProcessBuilder().command("./" + EXECUTABLE);
                 Map<String, String> env = execute.environment();
                 directory = env.get("PWD") + "/src/com/company";
@@ -83,15 +68,21 @@ public class WiperModel extends Observable{
                 execute.redirectErrorStream(true);
                 execute.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 
-
                 try {
                     final Process p = execute.start();
-                     shellExitStatus = p.exitValue();
+                    shellExitStatus = p.exitValue();
                     if(shellExitStatus == 1){//unsuccessful termination
                         this.driveWiped = 0;
-                        announce("Error");
+                        printer.add("No drive was provided or too many drives were provided. Please try again\n");
+                        //did not have drive selected/ did not have an cmd line arg
+                    }
+                    else if(shellExitStatus == -1){
+                        this.driveWiped = 0;
+                        printer.add(d.getLetterName() + " was unable to be opened or read\n");
+                        //file could not be opened
                     }
                     else{
+                        printer.add(d.getLetterName() + " was successfully wiped\n");
                         System.out.println("Finished wiping Drive " + d.getLetterName());
                     }
 
@@ -103,14 +94,16 @@ public class WiperModel extends Observable{
         }
         catch (Exception e){
             this.driveWiped = 0;
-            this.howManyWiped = 0;
         }
+    }
 
+    public void clearStream(){
+        this.printer.clear();
     }
     private void announce(String arg) {
         System.out.println(arg);
         setChanged();
-        notifyObservers(arg);
+        notifyObservers();
     }
 
     public void setDriveWiped(int driveWiped) {
@@ -121,11 +114,10 @@ public class WiperModel extends Observable{
         return driveWiped;
     }
 
-    public void setHowManyWiped(int howManyWiped){
-        this.howManyWiped = howManyWiped;
-    }
 
-    public int getHowManyWiped(){
-        return this.howManyWiped;
+    public String getOutput(){
+        StringBuilder sb = new StringBuilder();
+        this.printer.stream().forEach(element -> sb.append(element));
+        return sb.toString();
     }
 }

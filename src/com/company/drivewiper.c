@@ -29,10 +29,10 @@ void fillBuffer(char * buffer, const char data){
 
 int openFile(char * drive){
     ///dev/sdd - example of drive
-    int fd = open(drive, O_WRONLY);
+    int fd = open(drive, O_WRONLY, 0);
     if (fd < 0) {
         fprintf(stderr, "Error opening device file.\n");
-        return EXIT_FAILURE;
+        return -1;
     }
     else
         return fd;
@@ -44,10 +44,12 @@ int main(int argc, char * argv[]) {
     static long fsize; //file size
     if(argc == 1){//requires a drive name
         fprintf(stderr,"An argument is required wiper [drive path]\n");
+        //drive path should be absolute not canonical
         return 1;//returns error
     }
     else if(argc == 2){
         int f = openFile(argv[argc-1]);
+        if(f == -1){return -1;}
         fsize = computeFileSize(f);
         char * buffer = calloc(sizeof(char), BUFFSIZE);
         srand(time(NULL));   // should only be called once

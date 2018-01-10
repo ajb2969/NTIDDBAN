@@ -115,7 +115,7 @@ public class GUI extends Application implements EventHandler<ActionEvent>, Obser
         if(model.getDriveWiped() == 1){ // drives were wiped
             String driveListing = "";
 
-            switch (model.getHowManyWiped()){
+            switch (model.getDriveWiped()){
                 case 1:
                     Alert driveWipedSuccess = new Alert(Alert.AlertType.ERROR);
                     driveWipedSuccess.setTitle("Sucessful Wipe");
