@@ -1,0 +1,10 @@
+C:\Users\peyto_000\Documents\GitHub\DBAN\DBAN\DBAN\bin\Debug\DBAN.exe.config
+C:\Users\peyto_000\Documents\GitHub\DBAN\DBAN\DBAN\bin\Debug\DBAN.exe
+C:\Users\peyto_000\Documents\GitHub\DBAN\DBAN\DBAN\bin\Debug\DBAN.pdb
+C:\Users\peyto_000\Documents\GitHub\DBAN\DBAN\DBAN\obj\Debug\DBAN.csprojAssemblyReference.cache
+C:\Users\peyto_000\Documents\GitHub\DBAN\DBAN\DBAN\obj\Debug\DBAN.DBAN.resources
+C:\Users\peyto_000\Documents\GitHub\DBAN\DBAN\DBAN\obj\Debug\DBAN.Properties.Resources.resources
+C:\Users\peyto_000\Documents\GitHub\DBAN\DBAN\DBAN\obj\Debug\DBAN.csproj.GenerateResource.cache
+C:\Users\peyto_000\Documents\GitHub\DBAN\DBAN\DBAN\obj\Debug\DBAN.csproj.CoreCompileInputs.cache
+C:\Users\peyto_000\Documents\GitHub\DBAN\DBAN\DBAN\obj\Debug\DBAN.exe
+C:\Users\peyto_000\Documents\GitHub\DBAN\DBAN\DBAN\obj\Debug\DBAN.pdb
