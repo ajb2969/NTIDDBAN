@@ -40,6 +40,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.dbanBtn = new System.Windows.Forms.Button();
             this.dbanAllBtn = new System.Windows.Forms.Button();
+            this.refreshBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -57,7 +58,7 @@
             this.drivesCB.FormattingEnabled = true;
             this.drivesCB.Location = new System.Drawing.Point(18, 42);
             this.drivesCB.Name = "drivesCB";
-            this.drivesCB.Size = new System.Drawing.Size(266, 32);
+            this.drivesCB.Size = new System.Drawing.Size(411, 32);
             this.drivesCB.TabIndex = 1;
             this.drivesCB.SelectedIndexChanged += new System.EventHandler(this.drivesCB_SelectedIndexChanged);
             // 
@@ -75,7 +76,7 @@
             this.nameTB.Location = new System.Drawing.Point(18, 123);
             this.nameTB.Name = "nameTB";
             this.nameTB.ReadOnly = true;
-            this.nameTB.Size = new System.Drawing.Size(266, 29);
+            this.nameTB.Size = new System.Drawing.Size(411, 29);
             this.nameTB.TabIndex = 3;
             // 
             // typeTB
@@ -83,7 +84,7 @@
             this.typeTB.Location = new System.Drawing.Point(18, 199);
             this.typeTB.Name = "typeTB";
             this.typeTB.ReadOnly = true;
-            this.typeTB.Size = new System.Drawing.Size(266, 29);
+            this.typeTB.Size = new System.Drawing.Size(411, 29);
             this.typeTB.TabIndex = 5;
             // 
             // label2
@@ -101,7 +102,7 @@
             this.sizeTB.Location = new System.Drawing.Point(18, 358);
             this.sizeTB.Name = "sizeTB";
             this.sizeTB.ReadOnly = true;
-            this.sizeTB.Size = new System.Drawing.Size(266, 29);
+            this.sizeTB.Size = new System.Drawing.Size(411, 29);
             this.sizeTB.TabIndex = 9;
             // 
             // label3
@@ -118,7 +119,7 @@
             this.formatTB.Location = new System.Drawing.Point(18, 281);
             this.formatTB.Name = "formatTB";
             this.formatTB.ReadOnly = true;
-            this.formatTB.Size = new System.Drawing.Size(266, 29);
+            this.formatTB.Size = new System.Drawing.Size(411, 29);
             this.formatTB.TabIndex = 7;
             // 
             // label4
@@ -132,7 +133,7 @@
             // 
             // dbanBtn
             // 
-            this.dbanBtn.Location = new System.Drawing.Point(18, 411);
+            this.dbanBtn.Location = new System.Drawing.Point(166, 411);
             this.dbanBtn.Name = "dbanBtn";
             this.dbanBtn.Size = new System.Drawing.Size(119, 74);
             this.dbanBtn.TabIndex = 10;
@@ -142,18 +143,29 @@
             // 
             // dbanAllBtn
             // 
-            this.dbanAllBtn.Location = new System.Drawing.Point(165, 411);
+            this.dbanAllBtn.Location = new System.Drawing.Point(310, 411);
             this.dbanAllBtn.Name = "dbanAllBtn";
             this.dbanAllBtn.Size = new System.Drawing.Size(119, 74);
             this.dbanAllBtn.TabIndex = 11;
             this.dbanAllBtn.Text = "DBAN ALL";
             this.dbanAllBtn.UseVisualStyleBackColor = true;
             // 
+            // refreshBtn
+            // 
+            this.refreshBtn.Location = new System.Drawing.Point(18, 411);
+            this.refreshBtn.Name = "refreshBtn";
+            this.refreshBtn.Size = new System.Drawing.Size(119, 74);
+            this.refreshBtn.TabIndex = 12;
+            this.refreshBtn.Text = "Refresh";
+            this.refreshBtn.UseVisualStyleBackColor = true;
+            this.refreshBtn.Click += new System.EventHandler(this.refreshBtn_Click);
+            // 
             // DBAN
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(345, 518);
+            this.ClientSize = new System.Drawing.Size(475, 512);
+            this.Controls.Add(this.refreshBtn);
             this.Controls.Add(this.dbanAllBtn);
             this.Controls.Add(this.dbanBtn);
             this.Controls.Add(this.sizeTB);
@@ -187,6 +199,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button dbanBtn;
         private System.Windows.Forms.Button dbanAllBtn;
+        private System.Windows.Forms.Button refreshBtn;
     }
 }
 

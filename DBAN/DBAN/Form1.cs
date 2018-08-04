@@ -17,45 +17,85 @@ namespace DBAN
         public DBAN()
         {
             InitializeComponent();
-            GetDrive();
+            GetDrives();
         }
 
-        private void GetDrive()
+        private void GetDrives()
         {
-            foreach (System.IO.DriveInfo driveInfo in System.IO.DriveInfo.GetDrives())
+            try
             {
-                if (!driveInfo.DriveType.ToString().Equals("Fixed"))
+                foreach (System.IO.DriveInfo driveInfo in System.IO.DriveInfo.GetDrives())
                 {
-                    String type = driveInfo.DriveType.ToString();
-                    if (type.Equals(""))
+                    if (!driveInfo.DriveType.ToString().Equals("Fixed"))
                     {
-                        type = "";
+                        String type = driveInfo.DriveType.ToString();
+                        if (type.Equals(""))
+                        {
+                            type = "";
+                        }
+                        Drive tempDrive = new Drive(driveInfo.Name, driveInfo.VolumeLabel, type, driveInfo.DriveFormat, driveInfo.VolumeLabel);
+                        drives.Add(tempDrive);
+                        drivesCB.Items.Add(tempDrive.letter + " - " + tempDrive.name);
                     }
-                    Drive tempDrive = new Drive(driveInfo.Name, driveInfo.VolumeLabel, type, driveInfo.DriveFormat, driveInfo.VolumeLabel);
-                    drives.Add(tempDrive);
-                    drivesCB.Items.Add(tempDrive.letter + " - " + tempDrive.name);
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         private void drivesCB_SelectedIndexChanged(object sender, EventArgs e)
         {
-            nameTB.Text = drives[drivesCB.SelectedIndex].name;
-            typeTB.Text = drives[drivesCB.SelectedIndex].type;
-            formatTB.Text = drives[drivesCB.SelectedIndex].format;
-            sizeTB.Text = drives[drivesCB.SelectedIndex].size;
+            try
+            {
+                nameTB.Text = drives[drivesCB.SelectedIndex].name;
+                typeTB.Text = drives[drivesCB.SelectedIndex].type;
+                formatTB.Text = drives[drivesCB.SelectedIndex].format;
+                sizeTB.Text = drives[drivesCB.SelectedIndex].size;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "NTID DBAN");
+            }
         }
 
         private void dbanBtn_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Are you sure you want to DBAN " + drives[drivesCB.SelectedIndex].name + " ?", "NTID DBAN", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if(result == DialogResult.Yes)
+            try
             {
-                MessageBox.Show("Wipe complete!", "NTID DBAN", MessageBoxButtons.OK ,MessageBoxIcon.Information);
+                if (drivesCB.SelectedIndex > -1)
+                {
+                    var result = MessageBox.Show("Are you sure you want to DBAN " + drives[drivesCB.SelectedIndex].name + " ?", "NTID DBAN", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (result == DialogResult.Yes)
+                    {
+                        MessageBox.Show("Wipe complete!", "NTID DBAN", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wipe stopped", "NTID DBAN", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Select a drive", "NTID DBAN");
+                }
             }
-            else
+            catch(Exception ex)
             {
-                MessageBox.Show("Wipe stopped", "NTID DBAN", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.Message, "NTID DBAN");
+            }
+        }
+
+        private void refreshBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                GetDrives();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "NTID DBAN");
             }
         }
     }
